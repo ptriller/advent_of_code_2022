@@ -4,7 +4,7 @@ use std::str::FromStr;
 use regex::Regex;
 
 fn main() {
-    let file = File::open(&"day4/input.txt").unwrap();
+    let file = File::open(&"data/day4.txt").unwrap();
     let lines = io::BufReader::new(file).lines();
     let re = Regex::new(r"^(\d+)-(\d+),(\d+)-(\d+)").unwrap();
     let mut sum = 0;

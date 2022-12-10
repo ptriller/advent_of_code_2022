@@ -3,7 +3,7 @@ use std::io::{self, BufRead};
 
 
 fn main() {
-    let file = File::open(&"day2/input.txt").unwrap();
+    let file = File::open(&"data/day2.txt").unwrap();
     let lines = io::BufReader::new(file).lines();
     // Consumes the iterator, returns an (Optional) String
     let mut score = 0;

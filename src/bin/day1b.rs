@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::{self, BufRead};
 
 fn main() {
-    let file = File::open(&"day1/input.txt").unwrap();
+    let file = File::open(&"data/day1.txt").unwrap();
     let lines = io::BufReader::new(file).lines();
     let mut elf = 1;
     let mut calories = 0;
