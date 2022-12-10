@@ -1,6 +1,6 @@
-use advent_of_code_2022::day7::day7work1;
+use advent_of_code_2022::day8::day8work1;
 fn main() {
-    match day7work1() {
+    match day8work1() {
         Ok(num) => println!("Sum: {num}"),
         Err(data) =>         panic!("Something went wrong: {}", data)
     }

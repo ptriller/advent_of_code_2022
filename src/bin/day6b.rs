@@ -1,29 +1,7 @@
-use std::{fs, io};
-use std::collections::{HashSet, VecDeque};
-
-
+use advent_of_code_2022::day6::day6work2;
 fn main() {
-    if let Err(data) = work() {
-        panic!("Something went wrong: {}", data);
+    match day6work2() {
+        Ok(num) => println!("Processed: {num}"),
+        Err(data) =>         panic!("Something went wrong: {}", data)
     }
 }
-
-fn work() -> io::Result<String> {
-    let data = fs::read_to_string("data/day6.txt")?;
-    let mut deq = VecDeque::new();
-    let mut processed = 0;
-    for c in data.chars() {
-        deq.push_back(c);
-        processed += 1;
-        while deq.len() > 14 {
-            deq.pop_front();
-        }
-        let set: HashSet<char> = HashSet::from_iter(deq.iter().copied());
-        if set.len() == 14 {
-            println!("Offset: {}", processed);
-            return Ok("".to_string());
-        }
-    }
-    return Ok("".to_string());
-}
-

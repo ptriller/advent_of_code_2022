@@ -34,7 +34,6 @@ impl Directory {
                             .find(|i| -> bool { return i.name == dir; }) {
                         sizediff += subdir.process(iter)?;
                     } else {
-                        panic!("xxx");
                         self.subdirs.push(Directory::new(dir));
                         sizediff += self.subdirs.last_mut().unwrap().process(iter)?;
                     }
@@ -68,7 +67,7 @@ impl Directory {
 }
 
 
-pub fn day7work1() -> io::Result<String> {
+pub fn day7work1() -> io::Result<usize> {
     let file = fs::File::open(&"data/day7.txt").unwrap();
     let mut lines = io::BufReader::new(file).lines();
     let mut root = Directory {
@@ -79,11 +78,10 @@ pub fn day7work1() -> io::Result<String> {
     let _ = root.process(&mut lines)?;
     let mut sum = 0;
     root.walk(&mut |d| { if d.size <= 100000 { sum += d.size; } });
-    println!("Sum: {sum}");
-    return Ok("".to_string());
+    return Ok(sum);
 }
 
-pub fn day7work2() -> io::Result<String> {
+pub fn day7work2() -> io::Result<usize> {
     let file = fs::File::open(&"data/day7.txt").unwrap();
     let mut lines = io::BufReader::new(file).lines();
     let mut root = Directory {
@@ -92,12 +90,8 @@ pub fn day7work2() -> io::Result<String> {
         subdirs: vec!(),
     };
     let _ = root.process(&mut lines)?;
-    println!("Root: {}", root.size + 30000000);
     let required = 30000000 + root.size - 70000000;
-    println!("Required: {required}");
     let mut size = root.size;
     root.walk(&mut |d| { if d.size >= required && d.size < size { size = d.size; } });
-    println!("Size: {size}");
-    println!("{root:#?}");
-    return Ok("".to_string());
+    return Ok(size);
 }
