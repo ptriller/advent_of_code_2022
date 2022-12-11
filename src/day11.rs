@@ -214,7 +214,7 @@ mod tests {
     #[test]
     fn test_2() {
         match day11work2() {
-            Ok(num) => println!("Day 10 Part 1 Monkey Business: {num}"),
+            Ok(num) => println!("Day 10 Part 2 Monkey Business: {num}"),
             Err(data) => panic!("Something went wrong: {}", data)
         }
     }
