@@ -4,7 +4,7 @@ use std::io::BufRead;
 
 pub fn day10work1() -> io::Result<usize> {
     let file = fs::File::open(&"data/day10.txt").unwrap();
-    let mut lines = io::BufReader::new(file).lines();
+    let lines = io::BufReader::new(file).lines();
     return Ok(1);
 }
 
