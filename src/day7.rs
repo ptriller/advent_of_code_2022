@@ -95,3 +95,26 @@ pub fn day7work2() -> io::Result<usize> {
     root.walk(&mut |d| { if d.size >= required && d.size < size { size = d.size; } });
     return Ok(size);
 }
+
+
+
+#[cfg(test)]
+mod tests {
+    use crate::day7::{day7work1, day7work2};
+
+    #[test]
+    fn test_1() {
+        match day7work1() {
+            Ok(num) => println!("Day 7 Part 1 Sum: {num}"),
+            Err(data) => panic!("Something went wrong: {}", data)
+        }
+    }
+
+    #[test]
+    fn test_2() {
+        match day7work2() {
+            Ok(num) => println!("Day 7 Part 2 Result: {num}"),
+            Err(data) => panic!("Something went wrong: {}", data)
+        }
+    }
+}

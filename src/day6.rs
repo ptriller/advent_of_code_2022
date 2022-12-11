@@ -39,3 +39,24 @@ pub fn day6work2() -> io::Result<usize> {
     panic!("Noting found !")
 }
 
+
+#[cfg(test)]
+mod tests {
+    use crate::day6::{day6work1, day6work2};
+
+    #[test]
+    fn test_1() {
+        match day6work1() {
+            Ok(num) => println!("Day 6 Part 1 Processed: {num}"),
+            Err(data) => panic!("Something went wrong: {}", data)
+        }
+    }
+
+    #[test]
+    fn test_2() {
+        match day6work2() {
+            Ok(num) => println!("Day 6 Part 2 Processed: {num}"),
+            Err(data) => panic!("Something went wrong: {}", data)
+        }
+    }
+}

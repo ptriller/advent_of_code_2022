@@ -118,3 +118,25 @@ pub fn day8work2() -> io::Result<usize> {
     let forrest = Forrest::from_iter(&mut lines);
     return Ok(forrest.max_scenic());
 }
+
+
+#[cfg(test)]
+mod tests {
+    use crate::day8::{day8work1, day8work2};
+
+    #[test]
+    fn test_1() {
+        match day8work1() {
+            Ok(num) => println!("Day 8 Part 1 Count: {num}"),
+            Err(data) => panic!("Something went wrong: {}", data)
+        }
+    }
+
+    #[test]
+    fn test_2() {
+        match day8work2() {
+            Ok(num) => println!("Day 8 Part 2 Max Scenic: {num}"),
+            Err(data) => panic!("Something went wrong: {}", data)
+        }
+    }
+}

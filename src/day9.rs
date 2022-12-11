@@ -78,3 +78,25 @@ pub fn day9work2() -> io::Result<usize> {
     rope.drag_rope(&mut lines);
     return Ok(rope.trail.len());
 }
+
+
+#[cfg(test)]
+mod tests {
+    use crate::day9::{day9work1, day9work2};
+
+    #[test]
+    fn test_1() {
+        match day9work1() {
+            Ok(num) => println!("Day 9 Part 1 Positions: {num}"),
+            Err(data) => panic!("Something went wrong: {}", data)
+        }
+    }
+
+    #[test]
+    fn test_2() {
+        match day9work2() {
+            Ok(num) => println!("Day 9 Part 2 Positions: {num}"),
+            Err(data) => panic!("Something went wrong: {}", data)
+        }
+    }
+}
