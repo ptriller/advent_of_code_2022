@@ -1,6 +1,7 @@
 use criterion::{criterion_group, criterion_main, Criterion};
 use advent_of_code_2022::day1::{day1work1, day1work2};
 use advent_of_code_2022::day10::{day10work1, day10work2};
+use advent_of_code_2022::day11::{day11work1, day11work2};
 use advent_of_code_2022::day2::{day2work1, day2work2};
 use advent_of_code_2022::day3::{day3work1, day3work2};
 use advent_of_code_2022::day4::{day4work1, day4work2};
@@ -60,6 +61,12 @@ pub fn day10_benchmark(c: &mut Criterion) {
     c.bench_function("day10a", |b| b.iter(|| day10work1()));
     c.bench_function("day10b", |b| b.iter(|| day10work2()));
 }
+
+pub fn day11_benchmark(c: &mut Criterion) {
+    c.bench_function("day11a", |b| b.iter(|| day11work1()));
+    c.bench_function("day11b", |b| b.iter(|| day11work2()));
+}
+
 
 criterion_group!(benches,
     day1_benchmark,
