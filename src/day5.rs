@@ -91,7 +91,7 @@ mod tests {
     #[test]
     fn test_1() {
         match day5work1() {
-            Ok(str) => println!("Day 6 Part 1 Processed: {str}"),
+            Ok(str) => println!("Day 5 Part 1 Processed: {str}"),
             Err(data) => panic!("Something went wrong: {}", data)
         }
     }
@@ -99,7 +99,7 @@ mod tests {
     #[test]
     fn test_2() {
         match day5work2() {
-            Ok(str) => println!("Day 6 Part 2 Processed: {str}"),
+            Ok(str) => println!("Day 5 Part 2 Processed: {str}"),
             Err(data) => panic!("Something went wrong: {}", data)
         }
     }

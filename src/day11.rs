@@ -175,7 +175,6 @@ pub fn day11work1() -> io::Result<usize> {
     for _ in 0..20 {
         tree.calc_step(&|x| x / 3);
     }
-    println!("{tree:?}");
     return Ok(tree.calc_monkey_business());
 }
 
@@ -194,7 +193,6 @@ pub fn day11work2() -> io::Result<usize> {
     for _ in 0..10000 {
         tree.calc_step(&|x| x % kgv);
     }
-    println!("{tree:?}");
     return Ok(tree.calc_monkey_business());
 }
 
@@ -206,7 +204,7 @@ mod tests {
     #[test]
     fn test_1() {
         match day11work1() {
-            Ok(num) => println!("Day 10 Part 1 Monkey Business: {num}"),
+            Ok(num) => println!("Day 11 Part 1 Monkey Business: {num}"),
             Err(data) => panic!("Something went wrong: {}", data)
         }
     }
@@ -214,7 +212,7 @@ mod tests {
     #[test]
     fn test_2() {
         match day11work2() {
-            Ok(num) => println!("Day 10 Part 2 Monkey Business: {num}"),
+            Ok(num) => println!("Day 11 Part 2 Monkey Business: {num}"),
             Err(data) => panic!("Something went wrong: {}", data)
         }
     }
