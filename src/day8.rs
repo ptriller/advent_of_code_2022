@@ -7,12 +7,17 @@ struct Forrest {
 
 impl Forrest {
     fn from_iter<I>(iter: &mut I) -> Self
-        where
-            I: Iterator<Item=Result<String, io::Error>>, {
-        let mut forrest = Forrest { trees: vec!() };
+    where
+        I: Iterator<Item = Result<String, io::Error>>,
+    {
+        let mut forrest = Forrest { trees: vec![] };
         for result in iter {
             forrest.trees.push(
-                result.unwrap().chars().map(|c| c as u32 - '0' as u32).collect()
+                result
+                    .unwrap()
+                    .chars()
+                    .map(|c| c as u32 - '0' as u32)
+                    .collect(),
             );
         }
         forrest
@@ -22,7 +27,7 @@ impl Forrest {
         let mut max = 0;
         for y in 0..self.trees.len() {
             for x in 0..self.trees[y].len() {
-                let score = self.scenic_score(x,y);
+                let score = self.scenic_score(x, y);
                 if score > max {
                     max = score;
                 }
@@ -41,7 +46,7 @@ impl Forrest {
             }
         }
         let mut right = 0;
-        for dx in x+1..self.trees[y].len() {
+        for dx in x + 1..self.trees[y].len() {
             right += 1;
             if self.trees[y][dx] >= height {
                 break;
@@ -55,13 +60,13 @@ impl Forrest {
             }
         }
         let mut bottom = 0;
-        for dy in y+1..self.trees.len() {
+        for dy in y + 1..self.trees.len() {
             bottom += 1;
             if self.trees[dy][x] >= height {
                 break;
             }
         }
-        return left*right*top*bottom;
+        return left * right * top * bottom;
     }
 
     fn count_visibles(&self) -> usize {
@@ -119,7 +124,6 @@ pub fn day8work2() -> io::Result<usize> {
     return Ok(forrest.max_scenic());
 }
 
-
 #[cfg(test)]
 mod tests {
     use crate::day8::{day8work1, day8work2};
@@ -128,7 +132,7 @@ mod tests {
     fn test_1() {
         match day8work1() {
             Ok(num) => println!("Day 8 Part 1 Count: {num}"),
-            Err(data) => panic!("Something went wrong: {}", data)
+            Err(data) => panic!("Something went wrong: {}", data),
         }
     }
 
@@ -136,7 +140,7 @@ mod tests {
     fn test_2() {
         match day8work2() {
             Ok(num) => println!("Day 8 Part 2 Max Scenic: {num}"),
-            Err(data) => panic!("Something went wrong: {}", data)
+            Err(data) => panic!("Something went wrong: {}", data),
         }
     }
 }

@@ -11,12 +11,11 @@ pub fn day1work2() -> io::Result<usize> {
     return Ok(elves[0..3].iter().fold(0, |x, y| x + y));
 }
 
-
 fn calc_elves() -> Vec<usize> {
     let file = File::open(&"data/day1.txt").unwrap();
     let lines = io::BufReader::new(file).lines();
     let mut calories = 0;
-    let mut cal_vec: Vec<usize> = vec!();
+    let mut cal_vec: Vec<usize> = vec![];
     // Consumes the iterator, returns an (Optional) String
     for result in lines {
         let line = result.unwrap();
@@ -39,7 +38,7 @@ mod tests {
     fn test_1() {
         match day1work1() {
             Ok(str) => println!("Day 1 Part 1 Calories: {str}"),
-            Err(data) => panic!("Something went wrong: {}", data)
+            Err(data) => panic!("Something went wrong: {}", data),
         }
     }
 
@@ -47,8 +46,7 @@ mod tests {
     fn test_2() {
         match day1work2() {
             Ok(str) => println!("Day 1 Part 2 Calories: {str}"),
-            Err(data) => panic!("Something went wrong: {}", data)
+            Err(data) => panic!("Something went wrong: {}", data),
         }
     }
-
 }

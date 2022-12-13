@@ -1,7 +1,7 @@
-use std::{fs, io};
-use std::collections::{HashSet};
-use std::io::BufRead;
 use crate::day10::Instruction::{ADDX, NOOP};
+use std::collections::HashSet;
+use std::io::BufRead;
+use std::{fs, io};
 
 #[derive(Debug)]
 enum Instruction {
@@ -19,8 +19,9 @@ struct Computer {
 
 impl Computer {
     fn new<I>(iter: I) -> Self
-        where
-            I: Iterator<Item=Result<String, io::Error>>, {
+    where
+        I: Iterator<Item = Result<String, io::Error>>,
+    {
         return Computer {
             instructions: Vec::from_iter(iter.map(map_instruction)),
             pc: 0,
@@ -30,19 +31,26 @@ impl Computer {
     }
 
     fn execute<I>(&mut self, callback: &mut I)
-        where
-            I: FnMut(usize, isize) -> bool {
+    where
+        I: FnMut(usize, isize) -> bool,
+    {
         loop {
             match self.instructions[self.pc] {
                 NOOP => {
                     self.tick += 1;
-                    if !callback(self.tick, self.register) { return; };
+                    if !callback(self.tick, self.register) {
+                        return;
+                    };
                 }
                 ADDX(val) => {
                     self.tick += 1;
-                    if !callback(self.tick, self.register) { return; };
+                    if !callback(self.tick, self.register) {
+                        return;
+                    };
                     self.tick += 1;
-                    if !callback(self.tick, self.register) { return; };
+                    if !callback(self.tick, self.register) {
+                        return;
+                    };
                     self.register += val;
                 }
             }
@@ -56,7 +64,13 @@ fn map_instruction(res: io::Result<String>) -> Instruction {
     if line == "noop" {
         return NOOP;
     } else {
-        return ADDX(line.as_str().strip_prefix("addx ").unwrap().parse().unwrap());
+        return ADDX(
+            line.as_str()
+                .strip_prefix("addx ")
+                .unwrap()
+                .parse()
+                .unwrap(),
+        );
     }
 }
 
@@ -74,7 +88,6 @@ pub fn day10work1() -> io::Result<isize> {
     });
     return Ok(sum);
 }
-
 
 pub fn day10work2() -> io::Result<String> {
     let file = fs::File::open(&"data/day10.txt").unwrap();
@@ -106,7 +119,7 @@ mod tests {
     fn test_1() {
         match day10work1() {
             Ok(num) => println!("Day 10 Part 1 Signal Strength: {num}"),
-            Err(data) => panic!("Something went wrong: {}", data)
+            Err(data) => panic!("Something went wrong: {}", data),
         }
     }
 
@@ -114,7 +127,7 @@ mod tests {
     fn test_2() {
         match day10work2() {
             Ok(num) => println!("Day 10 Part 2 Display:\n{num}"),
-            Err(data) => panic!("Something went wrong: {}", data)
+            Err(data) => panic!("Something went wrong: {}", data),
         }
     }
 }

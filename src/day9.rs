@@ -1,6 +1,6 @@
 use std::collections::HashSet;
-use std::{fs, io};
 use std::io::BufRead;
+use std::{fs, io};
 
 type Position = (i32, i32);
 
@@ -21,8 +21,9 @@ impl RopeSpace {
     }
 
     fn drag_rope<I>(&mut self, iter: &mut I)
-        where
-            I: Iterator<Item=Result<String, io::Error>>, {
+    where
+        I: Iterator<Item = Result<String, io::Error>>,
+    {
         self.trail.insert(self.tail.last().unwrap().clone());
         for res in iter {
             let line = res.unwrap();
@@ -32,7 +33,7 @@ impl RopeSpace {
                 'L' => (-1, 0),
                 'D' => (0, -1),
                 'U' => (0, 1),
-                _ => panic!("Illegal Input")
+                _ => panic!("Illegal Input"),
             };
             for _ in 0..num {
                 self.head.0 += mv.0;
@@ -40,7 +41,7 @@ impl RopeSpace {
                 move_tail(&self.head, &mut self.tail.first_mut().unwrap());
                 for i in 0..self.tail.len() - 1 {
                     let head = self.tail[i].clone();
-                    move_tail(&head, &mut self.tail[i+1]);
+                    move_tail(&head, &mut self.tail[i + 1]);
                 }
                 self.trail.insert(self.tail.last().unwrap().clone());
             }
@@ -79,7 +80,6 @@ pub fn day9work2() -> io::Result<usize> {
     return Ok(rope.trail.len());
 }
 
-
 #[cfg(test)]
 mod tests {
     use crate::day9::{day9work1, day9work2};
@@ -88,7 +88,7 @@ mod tests {
     fn test_1() {
         match day9work1() {
             Ok(num) => println!("Day 9 Part 1 Positions: {num}"),
-            Err(data) => panic!("Something went wrong: {}", data)
+            Err(data) => panic!("Something went wrong: {}", data),
         }
     }
 
@@ -96,7 +96,7 @@ mod tests {
     fn test_2() {
         match day9work2() {
             Ok(num) => println!("Day 9 Part 2 Positions: {num}"),
-            Err(data) => panic!("Something went wrong: {}", data)
+            Err(data) => panic!("Something went wrong: {}", data),
         }
     }
 }

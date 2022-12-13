@@ -1,7 +1,7 @@
-use std::{io};
 use std::collections::HashSet;
 use std::fs::File;
-use std::io::{BufRead};
+use std::io;
+use std::io::BufRead;
 
 use crate::day11::Operand::{NUM, OLD};
 use crate::day11::Operation::{ADD, MULT};
@@ -21,7 +21,7 @@ enum Operation {
 
 #[derive(Debug)]
 enum Test {
-    MODULO(usize)
+    MODULO(usize),
 }
 
 #[derive(Debug)]
@@ -34,7 +34,6 @@ struct Monkey {
     inspect: usize,
 }
 
-
 #[derive(Debug)]
 struct Tree {
     monkeys: Vec<Monkey>,
@@ -42,8 +41,9 @@ struct Tree {
 
 impl Monkey {
     fn new<I>(lines: &mut I) -> Self
-        where
-            I: Iterator<Item=Result<String, io::Error>>, {
+    where
+        I: Iterator<Item = Result<String, io::Error>>,
+    {
         return Monkey {
             inspect: 0,
             items: Monkey::parse_items(lines.next().unwrap().unwrap()),
@@ -55,10 +55,12 @@ impl Monkey {
     }
 
     fn calc_step<F>(&mut self, mapper: &F) -> Vec<(usize, usize)>
-        where
-            F: Fn(usize) -> usize
+    where
+        F: Fn(usize) -> usize,
     {
-        let result = self.items.iter()
+        let result = self
+            .items
+            .iter()
             .map(|old| Monkey::apply_oepration(&self.operation, *old))
             .map(mapper)
             .map(|worry| {
@@ -84,30 +86,38 @@ impl Monkey {
 
     fn apply_oepration(op: &Operation, old: usize) -> usize {
         match op {
-            ADD(l, r) =>
-                Monkey::apply_operand(l, old) + Monkey::apply_operand(r, old),
-            MULT(l, r) =>
-                Monkey::apply_operand(l, old) * Monkey::apply_operand(r, old)
+            ADD(l, r) => Monkey::apply_operand(l, old) + Monkey::apply_operand(r, old),
+            MULT(l, r) => Monkey::apply_operand(l, old) * Monkey::apply_operand(r, old),
         }
     }
 
     fn apply_operand(op: &Operand, old: usize) -> usize {
         match op {
             OLD => old,
-            NUM(val) => *val
+            NUM(val) => *val,
         }
     }
 
     fn parse_items(line: String) -> Vec<usize> {
-        Vec::from_iter(line.as_str()[18..].split(",").map(|id| id.trim().parse().unwrap()))
+        Vec::from_iter(
+            line.as_str()[18..]
+                .split(",")
+                .map(|id| id.trim().parse().unwrap()),
+        )
     }
 
     fn parse_operation(line: String) -> Operation {
         let elements: Vec<&str> = line.as_str()[19..].split(" ").collect();
         match elements[1] {
-            "+" => ADD(Monkey::parse_operand(elements[0]), Monkey::parse_operand(elements[2])),
-            "*" => MULT(Monkey::parse_operand(elements[0]), Monkey::parse_operand(elements[2])),
-            _ => panic!("Merry Chrismas !")
+            "+" => ADD(
+                Monkey::parse_operand(elements[0]),
+                Monkey::parse_operand(elements[2]),
+            ),
+            "*" => MULT(
+                Monkey::parse_operand(elements[0]),
+                Monkey::parse_operand(elements[2]),
+            ),
+            _ => panic!("Merry Chrismas !"),
         }
     }
 
@@ -117,7 +127,6 @@ impl Monkey {
         }
         return NUM(op.parse().unwrap());
     }
-
 
     fn parse_test(line: String) -> Test {
         MODULO(line.as_str()[21..].parse().unwrap())
@@ -130,12 +139,10 @@ impl Monkey {
 
 impl Tree {
     fn new<I>(mut lines: I) -> Self
-        where
-            I: Iterator<Item=Result<String, io::Error>>,
+    where
+        I: Iterator<Item = Result<String, io::Error>>,
     {
-        let mut tree = Tree {
-            monkeys: vec!()
-        };
+        let mut tree = Tree { monkeys: vec![] };
         loop {
             let _line = lines.next().unwrap();
             tree.monkeys.push(Monkey::new(&mut lines));
@@ -147,8 +154,8 @@ impl Tree {
     }
 
     fn calc_step<F>(&mut self, mapper: &F)
-        where
-            F: Fn(usize) -> usize
+    where
+        F: Fn(usize) -> usize,
     {
         for i in 0..self.monkeys.len() {
             let items = self.monkeys[i].calc_step(mapper);
@@ -159,14 +166,11 @@ impl Tree {
     }
 
     fn calc_monkey_business(&self) -> usize {
-        let mut monkey: Vec<usize> = self.monkeys.iter()
-            .map(|m| m.inspect)
-            .collect();
+        let mut monkey: Vec<usize> = self.monkeys.iter().map(|m| m.inspect).collect();
         monkey.sort_by(|a, b| b.cmp(a));
         return monkey[0] * monkey[1];
     }
 }
-
 
 pub fn day11work1() -> io::Result<usize> {
     let file = File::open(&"data/day11.txt").unwrap();
@@ -182,20 +186,16 @@ pub fn day11work2() -> io::Result<usize> {
     let file = File::open(&"data/day11.txt").unwrap();
     let mut lines = io::BufReader::new(file).lines();
     let mut tree = Tree::new(&mut lines);
-    let mod_set: HashSet<usize> = HashSet::from_iter(
-        tree.monkeys.iter()
-            .map(|m| {
-                let MODULO(a) = m.test;
-                return a;
-            })
-    );
+    let mod_set: HashSet<usize> = HashSet::from_iter(tree.monkeys.iter().map(|m| {
+        let MODULO(a) = m.test;
+        return a;
+    }));
     let kgv = mod_set.iter().fold(1 as usize, |a, b| a * b);
     for _ in 0..10000 {
         tree.calc_step(&|x| x % kgv);
     }
     return Ok(tree.calc_monkey_business());
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -205,7 +205,7 @@ mod tests {
     fn test_1() {
         match day11work1() {
             Ok(num) => println!("Day 11 Part 1 Monkey Business: {num}"),
-            Err(data) => panic!("Something went wrong: {}", data)
+            Err(data) => panic!("Something went wrong: {}", data),
         }
     }
 
@@ -213,7 +213,7 @@ mod tests {
     fn test_2() {
         match day11work2() {
             Ok(num) => println!("Day 11 Part 2 Monkey Business: {num}"),
-            Err(data) => panic!("Something went wrong: {}", data)
+            Err(data) => panic!("Something went wrong: {}", data),
         }
     }
 }

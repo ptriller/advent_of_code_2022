@@ -1,5 +1,5 @@
-use std::{fs, io};
 use std::collections::{HashSet, VecDeque};
+use std::{fs, io};
 
 pub fn day6work1() -> io::Result<usize> {
     let data = fs::read_to_string("data/day6.txt")?;
@@ -19,8 +19,6 @@ pub fn day6work1() -> io::Result<usize> {
     panic!("Noting found !")
 }
 
-
-
 pub fn day6work2() -> io::Result<usize> {
     let data = fs::read_to_string("data/day6.txt")?;
     let mut deq = VecDeque::new();
@@ -39,7 +37,6 @@ pub fn day6work2() -> io::Result<usize> {
     panic!("Noting found !")
 }
 
-
 #[cfg(test)]
 mod tests {
     use crate::day6::{day6work1, day6work2};
@@ -48,7 +45,7 @@ mod tests {
     fn test_1() {
         match day6work1() {
             Ok(num) => println!("Day 6 Part 1 Processed: {num}"),
-            Err(data) => panic!("Something went wrong: {}", data)
+            Err(data) => panic!("Something went wrong: {}", data),
         }
     }
 
@@ -56,7 +53,7 @@ mod tests {
     fn test_2() {
         match day6work2() {
             Ok(num) => println!("Day 6 Part 2 Processed: {num}"),
-            Err(data) => panic!("Something went wrong: {}", data)
+            Err(data) => panic!("Something went wrong: {}", data),
         }
     }
 }
